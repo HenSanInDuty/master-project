@@ -1,0 +1,32 @@
+services:
+  gui:
+    build: 
+      context: .
+      target: gui
+    ports:
+      - 8501:8501
+    depends_on:
+      - api
+    volumes:
+      - ./gui:/app
+    restart: always
+    networks:
+      - app
+    container_name: gui
+    
+  api:
+    build: 
+      context: .
+      target: api
+    ports:
+      - 8000:8000
+    volumes:
+      - ./api:/app
+    restart: always
+    networks:
+      - app
+    container_name: api
+
+networks:
+  app:
+    driver: bridge
