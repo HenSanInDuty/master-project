@@ -14,3 +14,9 @@ Lưu ý: Python phiên bản đang sử dụng là 3.12.4
 - Thư mục src chứa chương trình chính, trong đó:
     + gui chứa front-end
     + api chứa back-end
+
+**Requiment**
+1. Java version 8
+2. Scala 2.12
+3. sbt 1.4.0
+4. Python 3.12
