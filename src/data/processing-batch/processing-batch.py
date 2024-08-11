@@ -7,18 +7,31 @@ working_dir = os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(os
 
 data_dir = working_dir + "\\src\\data"
 data_preprocess_path = data_dir + "\\data_crawl.json"
-# dic_path = working_dir + "\\src\\data\\processing-batch\\VDic\\VDic_uni.txt"
-
-# Get Dic
-# dic = pd.read_csv(dic_path, delimiter = "\t\t", header=None)
-# print(dic)
+bat_file_path = data_dir + "\\processing-batch\\Tokenizer.bat"
+jar_file_path = data_dir + "\\processing-batch\\JVnTextPro-3.0.3-executable.jar"
 
 #Read file
-# df = pd.read_json(data_preprocess_path, encoding="utf8", orient='records').drop_duplicates()
+df = pd.read_json(data_preprocess_path, encoding="utf8", orient='records').drop_duplicates()
 
-# print(df)
-bat_file_path = data_dir + "\\processing-batch\\Tokenizer.bat"
-p = subprocess.run([bat_file_path], capture_output=True, text=True)
+topics = set(df['topic'])
 
-# Run tokenizer
-# spark-submit ./src/data/processing-batch/vlp-master/tok/target/scala-2.12/tok.jar in.txt
+for topic in topics:
+    # Get data with topic
+    data = df[df['topic'] == topic]
+
+    # Concat all content
+    content = "Nhan Tran Trong"
+    for row in data:
+        print(row)
+        #content += row['content']
+    input_file_name = f"{topic}.txt"
+        
+    # Write content to file for Tagging    
+    with open(input_file_name, "w") as file:
+        file.write(content)
+    
+    
+    # Tagging 
+    p = subprocess.call([bat_file_path, jar_file_path, input_file_name])
+    
+    
