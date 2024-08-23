@@ -8,9 +8,11 @@
 
 Pipeline
 1. Crawl -> done
-2. Preprocessing -> doing
-  2.1. Install VnTagger
-2. Train document -> doing
-3. train document for topic model
-4. graph model trainning
+2. Preprocessing -> done
+  2.1. Install VnTagger (JVNPro) -> done
+2. Train document -> done
+3. train document for topic model -> done
+4. graph model trainning -> doing
+4.1. Multiple document processing -> ?
 5. build app
+6. Jenkin

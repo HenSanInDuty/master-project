@@ -1,25 +1,22 @@
-from fastapi import FastAPI
-# import joblib
-import numpy as np
-from sklearn.datasets import load_iris
+from functools import lru_cache
 
-# Load the iris dataset
-iris = load_iris()
-# Initialize FastAPI app
+from fastapi import Depends, FastAPI
+from typing_extensions import Annotated
+
+from . import config
+
 app = FastAPI()
 
-# # Load the trained model 
-# model = joblib.load('model.joblib')
 
-# Define FastAPI endpoints
-@app.get("/")
-async def read_root():
-    return {"message": "Welcome to the model API!"}
+@lru_cache
+def get_settings():
+    return config.Settings()
 
-@app.post("/predict/")
-async def predict_species(data: dict):
-    # Implement your prediction logic here using the loaded model
-    features = np.array(data['features']).reshape(1, -1)
-    prediction = model.predict(features)
-    class_name = iris.target_names[prediction][0]
-    return {"class": class_name}
+
+@app.get("/info")
+async def info(settings: Annotated[config.Settings, Depends(get_settings)]):
+    return {
+        "app_name": settings.app_name,
+        "admin_email": settings.admin_email,
+        "items_per_user": settings.items_per_user,
+    }
