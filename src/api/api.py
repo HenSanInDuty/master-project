@@ -12,11 +12,18 @@ app = FastAPI()
 def get_settings():
     return config.Settings()
 
+@app.get("pos_tools")
+def get_pos_tools():
+    return ["JVNPro"]
 
-@app.get("/info")
-async def info(settings: Annotated[config.Settings, Depends(get_settings)]):
-    return {
-        "app_name": settings.app_name,
-        "admin_email": settings.admin_email,
-        "items_per_user": settings.items_per_user,
-    }
+@app.get("word_similarity_tools")
+def word_similarity_tools():
+    return ["PMI"]
+
+@app.get("trainning")
+def trainning():
+    # Pre-processing
+    # Trainning topic model
+    # Trainning similarity
+    # Return json model
+    return ["JVNPro"]
