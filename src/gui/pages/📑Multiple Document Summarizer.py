@@ -42,7 +42,7 @@ async def main():
         document_uploaded_json = st.file_uploader("Tải tệp lên", accept_multiple_files= False, key="document_uploaded")
         
         # -- Chọn tập hư từ, có thể thêm file hoặc là thêm văn bảng hoặc không cần hư từ
-        st.write("Đưa vào tập hư từ có từ ghép với dưới dạng _. Ví dụ: ba_ngày")
+        st.write("Đưa vào tập hư từ có từ ghép với dưới dạng _. Ví dụ: học_sinh")
         stop_word_text_file = st.file_uploader("Tải tệp lên", accept_multiple_files = False, key="stop_words_uploaded")
         
         # -- Chọn tool để thực hiện gán nhãn từ loại
@@ -59,7 +59,7 @@ async def main():
         topic_word_threshold = round(topic_word_threshold, 2)
         # ------ Trainning PMI 
         st.markdown("#### Phần cấu hình dành cho tính toán độ tương tự của từ")
-        word_similarity_tools = st.selectbox("Chọn công cụ", st.session_state.api_data_trainning['word_similarity_tools'])
+        word_similarity_tools = st.selectbox("Chọn công cụ", st.session_state.api_data_trainning['word_similarity_tools'], key="word_similarity_tools_trainning")
         
         # Trainning
         if st.button("Bắt đầu huấn luyện"):

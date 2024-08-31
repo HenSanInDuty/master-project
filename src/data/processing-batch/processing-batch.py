@@ -9,7 +9,7 @@ data_preprocess_path = data_dir + "\\data_crawl.json"
 bat_file_path = data_dir + "\\processing-batch\\Tokenizer.bat"
 jar_file_path = data_dir + "\\processing-batch\\JVnTextPro-3.0.3-executable.jar"
 stop_word_path = data_dir + "\\processing-batch\\vietnamese-stopwords-dash.txt"
-    
+
 def handle_stop_word():
     stop_word_file = open(stop_word_path, "r", encoding="utf-8")
     stop_words = stop_word_file.read()
@@ -30,7 +30,7 @@ if __name__ == "__main__":
         content = content.replace("\n", " ")
         input_file_name = data_dir + f"\\processing-batch\\data-process\\{topic}.txt"
             
-        # Write content to file for Tagging    
+        # Write content to file for Tagging
         with open(input_file_name, "w", encoding="utf-8") as file:
             file.write(content)
         
