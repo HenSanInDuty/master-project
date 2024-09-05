@@ -14,6 +14,11 @@ get_word_similarity_tools = {
 
 # NLP Trainning topic model
 trainning = {
-    'method': 'GET',
+    'method': 'POST',
     'url': API_host + 'trainning'
+}
+
+inference = {
+    'method': 'POST',
+    'url': API_host + 'inference'
 }

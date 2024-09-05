@@ -20,3 +20,10 @@ Lưu ý: Python phiên bản đang sử dụng là 3.12.4
 2. Scala 2.12
 3. sbt 1.4.0
 4. Python 3.12
+
+**Pytorch**
+Pytorch will have especial install with other
+Please follow the line
+1. git clone --recursive https://github.com/pytorch/pytorch
+2. cd pytorch
+3. python setup.py develop
