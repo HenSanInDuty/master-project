@@ -22,3 +22,8 @@ inference = {
     'method': 'POST',
     'url': API_host + 'inference'
 }
+
+evaluate = {
+    'method': 'POST',
+    'url': API_host + 'evaluate'
+}

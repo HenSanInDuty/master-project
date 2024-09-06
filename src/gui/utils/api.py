@@ -26,3 +26,13 @@ async def inference(document_uploaded_json, topic_model, trainning_option):
                                 'models': topic_model
                             }
                             ).json()
+    
+async def evaluate(document_uploaded_json, topic_model, trainning_option):
+    return requests.request(method=contants.evaluate['method'], 
+                            url=contants.evaluate['url'], 
+                            params=trainning_option, 
+                            files={
+                                'test_documents': document_uploaded_json,
+                                'models': topic_model
+                            }
+                            ).json()

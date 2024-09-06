@@ -14,17 +14,23 @@ def BertScore_evaluate(document: str, summary_document: str):
     _, _, F1_1 = scorer.score([document], [summary_document])
     return F1_1.tolist()[0]
 
-
-# def Gemini_evaluate(document:str, summary_document:str):
-
-
-def return_evaluation_for_GUI(evalute: dict):
+def return_evaluation_for_GUI(evaluate: list[dict]):
+    '''
+    evaluate có dạng
+    [{'ROUGE-1':[value], 'ROUGE-2':[value], "ROUGE_L":[value], "BertScore":[value]},
+    {'ROUGE-1':[value], 'ROUGE-2':[value], "ROUGE_L":[value], "BertScore":[value]}]
+    
+    Độ dài của evaluate tuỳ thuộc vào số cách tóm tắt được đưa vào
+    '''
     evaluate_metric = ["ROUGE-1", "ROUGE-2", "ROUGE-L", "BertScore"]
-    return_evaluation = {}
-    for metric in evaluate_metric:
-        max_value = max(evalute[f"{metric}"])
-        min_value = min(evalute[f"{metric}"])
-        mean_value = mean(evalute[f"{metric}"])
-        return_evaluation[f"{metric}"] = [max_value, min_value, mean_value]
+    return_evaluation = []
+    for evaluate_instance in evaluate:
+        evaluation = {} 
+        for metric in evaluate_metric:
+            max_value = max(evaluate_instance[f"{metric}"])
+            min_value = min(evaluate_instance[f"{metric}"])
+            mean_value = mean(evaluate_instance[f"{metric}"])
+            evaluation[f"{metric}"] = [max_value, min_value, mean_value]
+        return_evaluation.append(evaluation)
 
     return return_evaluation

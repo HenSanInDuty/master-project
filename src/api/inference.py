@@ -161,7 +161,7 @@ def concat_list_summary_sentences(summary_sentences: list[models.Sentence], with
     for summary_sentence in summary_sentences:
         summary_document += summary_sentence[1] + "."
         if with_position:
-            summary_document += summary_sentence[0]
+            summary_document += str(summary_sentence[0])
 
     return summary_document
 
