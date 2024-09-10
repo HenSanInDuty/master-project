@@ -6,6 +6,7 @@ class OptionTrainning(BaseModel):
     similarity_calculation_method: str = ''
     r_threshold: float = 0.4
     alpha: float = 0.3
+    model: str = ''
 
 class Sentence():
     '''Class câu'''
@@ -74,7 +75,7 @@ class Document():
     
     def apply_document_weight_for_sentences(self):
         for i in range(len(self.sentences)):
-            self.sentences[i].set_weight(self.sentences[i].weight * self.weight)
+            self.sentences[i].set_weight(self.sentences[i].weight + self.sentences[i].weight * self.weight)
 
 class TopicModel():
     '''Class cho mô hình chủ đề'''

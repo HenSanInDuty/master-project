@@ -156,3 +156,9 @@ def pos_tag_document(preprocess_documents:str, pos_tool: str) -> str:
         case _:
             raise Exception("Chưa hỗ trợ định dạng này")
     return tagging_document
+
+def get_model(model_name:str) -> dict:
+    setting = get_settings()
+    models_dir = get_working_dir() + setting.trained_model_path
+    
+    

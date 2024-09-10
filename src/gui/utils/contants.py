@@ -27,3 +27,8 @@ evaluate = {
     'method': 'POST',
     'url': API_host + 'evaluate'
 }
+
+summary = {
+    'method': 'POST',
+    'url': API_host + 'summary'
+}

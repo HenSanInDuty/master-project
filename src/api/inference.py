@@ -141,7 +141,9 @@ def cal_sentences_weight(
     return weighted_sentences
 
 
-def concat_list_summary_sentences(summary_sentences: list[models.Sentence], with_position: bool = False) -> str:
+def concat_list_summary_sentences(
+    summary_sentences: list[models.Sentence], with_position: bool = False
+) -> str:
     """
     Cộng chuỗi các câu để tóm tắt
 
@@ -154,7 +156,9 @@ def concat_list_summary_sentences(summary_sentences: list[models.Sentence], with
     str: Văn bảng tóm tắt theo thứ tự
     """
 
-    summary_sentences = [[sentence.position, sentence.content_original] for sentence in summary_sentences]
+    summary_sentences = [
+        [sentence.position, sentence.content_original] for sentence in summary_sentences
+    ]
     summary_document = ""
     summary_sentences = sorted(summary_sentences, key=lambda x: x[0])
 

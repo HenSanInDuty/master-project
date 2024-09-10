@@ -36,3 +36,13 @@ async def evaluate(document_uploaded_json, topic_model, trainning_option):
                                 'models': topic_model
                             }
                             ).json()
+    
+async def summary(document_uploaded_json, trainning_option):
+    files = []
+    for file in document_uploaded_json:
+        files.append(('documents', file))
+    return requests.request(method=contants.summary['method'], 
+                            url=contants.summary['url'], 
+                            params=trainning_option, 
+                            files = files
+                            ).json()

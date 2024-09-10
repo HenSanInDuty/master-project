@@ -1,8 +1,8 @@
 import json
+import pandas as pd
 from sklearn.model_selection import train_test_split
 
 from fastapi import Depends, FastAPI, UploadFile
-from pandas import read_json
 from . import utils, models, evaluation, train, inference
 from fastapi.responses import JSONResponse
 
@@ -26,7 +26,7 @@ async def trainning(
     options: models.OptionTrainning = Depends(),
 ):
     # Tiền xử lý
-    df = read_json(documents.file, encoding="utf8", orient="records").drop_duplicates()
+    df = pd.read_json(documents.file, encoding="utf8", orient="records").drop_duplicates()
     df = df[df["content"] != ""]
 
     pre_processing_document = utils.pre_processing_document(df)
@@ -69,7 +69,7 @@ async def inference_api(
     options: models.OptionTrainning = Depends(),
 ):
     # Tiền xử lý
-    df = read_json(documents.file, encoding="utf8", orient="records").drop_duplicates()
+    df = pd.read_json(documents.file, encoding="utf8", orient="records").drop_duplicates()
     df = df[df["content"] != ""]
 
     # Đọc file model
@@ -196,3 +196,52 @@ async def evaluate_api(
 
     evaluations = evaluation.return_evaluation_for_GUI(evaluations)
     return JSONResponse(evaluations)
+
+@app.post("/summary/")
+async def summary_api(
+    documents: list[UploadFile],
+    options: models.OptionTrainning = Depends(),
+):
+    # Tiền xử lý
+    document_list = []
+    for document in documents:
+        document_list.append({
+            "content": document.file.read(),
+            "topic": ""
+        })
+    df = pd.DataFrame.from_records(document_list).drop_duplicates()
+    df = df[df["content"] != ""]
+
+    
+    # Đọc file model
+    models_json = json.load(models.file)
+
+    # Thêm các thông số huấn luyện
+    options.similarity_calculation_method = models_json["word_similarity"]["type"]
+    list_stop_word = models_json["stop_words"]
+    word_similarity = models_json["word_similarity"]
+    topic_model = models_json["topic_model"]
+
+    # Kết quả trả về có dạng
+    result = {
+        "summary_document": "",  # văn bản sau khi tóm tắt
+    }
+    
+    # Thực hiện tóm tắt một cụm văn bản
+    print("Sumarizing..............................")
+    documents = df.to_dict("records")
+    summary_document, _, _ = (
+        inference.summary_cluster_document(
+            documents, topic_model, word_similarity, options, list_stop_word
+        )
+    )
+    sorted_summary_document = sorted(summary_document, key=lambda x: x.position)
+    # Kết quả tóm tắt của toàn bộ văn bản
+    summary_document_str = inference.concat_list_summary_sentences(
+        sorted_summary_document, with_position=True
+    )
+
+    # Kết quả trả về
+    result["summary_document"] = summary_document_str
+
+    return JSONResponse(result)
