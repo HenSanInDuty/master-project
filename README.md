@@ -10,6 +10,7 @@
     + **api** chứa back-end
 
 **Cách chạy chương trình**
+- Giải nén thư mục **source**
 - Giải nén thư mục **models** và copy vào thư mục cùng cấp với thư mục **src**
 
 1. Nếu chạy ở Window
