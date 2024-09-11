@@ -19,6 +19,7 @@ Chạy lệnh
 Sau đó chạy lệnh
 - streamlit run src/gui/gui.py
 - fastapi dev src/api/api.py
+
 2. Nếu chạy bằng Docker
 Thực hiện lệnh
 docker-compose up --build
