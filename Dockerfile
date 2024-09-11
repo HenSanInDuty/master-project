@@ -13,4 +13,4 @@ RUN pip install -r requirements.txt
 COPY . /gui
 EXPOSE 8501
 ENTRYPOINT ["streamlit","run"]
-CMD ["src/gui/gui.py"]
+CMD ["src/gui/gui.py --server.maxUploadSize 200"]
