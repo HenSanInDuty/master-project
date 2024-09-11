@@ -1,4 +1,3 @@
-import json
 import streamlit as st
 import pandas as pd
 import asyncio
@@ -10,16 +9,6 @@ st.set_page_config(
 )
 
 # ---------- Tạo session state ----------
-# API state
-if 'api_data_trainning' not in st.session_state:
-    st.session_state.api_data_trainning = {
-        'finish' : False
-    }
-# API state
-if 'api_data_inference' not in st.session_state:
-    st.session_state.api_data_inference = {
-        'finish' : False
-    }
 # Widget state
 if 'btn_result' not in st.session_state:
     st.session_state.btn_result = False
