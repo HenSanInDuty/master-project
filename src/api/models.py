@@ -1,12 +1,12 @@
 from pydantic import BaseModel
 
 class OptionTrainning(BaseModel):
-    pos_tool: str = ''
+    pos_tool: str = 'JVnTextPro' # Mặc định là dùng JVnTextPro
     threshold_core_word: float = 0.0
     similarity_calculation_method: str = ''
     r_threshold: float = 0.4
     alpha: float = 0.3
-    model: str = ''
+    choice_model: str = ''
 
 class Sentence():
     '''Class câu'''

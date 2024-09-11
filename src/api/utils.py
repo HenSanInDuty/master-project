@@ -157,8 +157,13 @@ def pos_tag_document(preprocess_documents:str, pos_tool: str) -> str:
             raise Exception("Chưa hỗ trợ định dạng này")
     return tagging_document
 
-def get_model(model_name:str) -> dict:
+def get_model(model_name:str) -> str:
     setting = get_settings()
     models_dir = get_working_dir() + setting.trained_model_path
-    
+    match model_name:
+        case "Mô hình tóm tắt 1.0":
+            models_file = models_dir + 'topic_model_1.json'
+            return models_file
+        case _:
+            raise Exception(f"Chưa hỗ trợ mô hình {model_name}")
     

@@ -163,7 +163,7 @@ def concat_list_summary_sentences(
     summary_sentences = sorted(summary_sentences, key=lambda x: x[0])
 
     for summary_sentence in summary_sentences:
-        summary_document += summary_sentence[1] + "."
+        summary_document += summary_sentence[1].strip() + ". "
         if with_position:
             summary_document += str(summary_sentence[0])
 

@@ -45,13 +45,13 @@ async def main():
     r_threshold = round(r_threshold, 2)
     
     # Chọn mô hình
-    model_choice = st.selectbox("Chọn mô hình", ["Mô hình tóm tắt 1.0"])
+    choice_model = st.selectbox("Chọn mô hình", ["Mô hình tóm tắt 1.0"])
     
     if st.button("Bắt đầu tóm tắt") or st.session_state.btn_result:
         # ----- Kết quả
         with st.spinner("Đang tiến hành tóm tắt văn bản"):
             result = await api.summary(documents,
-                                        {'r_threshold':r_threshold})
+                                        {'r_threshold':r_threshold, 'choice_model': choice_model})
             st.session_state.btn_result = True
             
             # Văn bản sau khi tóm tắt

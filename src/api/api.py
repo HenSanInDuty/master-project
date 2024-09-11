@@ -206,22 +206,21 @@ async def summary_api(
     document_list = []
     for document in documents:
         document_list.append({
-            "content": document.file.read(),
+            "content": document.file.read().decode("utf-8"),
             "topic": ""
         })
-    df = pd.DataFrame.from_records(document_list).drop_duplicates()
-    df = df[df["content"] != ""]
-
     
     # Đọc file model
-    models_json = json.load(models.file)
-
+    model_path = utils.get_model(options.choice_model)
+    with open(model_path, "r", encoding="utf8") as file:
+        models_json = json.load(file)
+    
     # Thêm các thông số huấn luyện
     options.similarity_calculation_method = models_json["word_similarity"]["type"]
     list_stop_word = models_json["stop_words"]
     word_similarity = models_json["word_similarity"]
     topic_model = models_json["topic_model"]
-
+    
     # Kết quả trả về có dạng
     result = {
         "summary_document": "",  # văn bản sau khi tóm tắt
@@ -229,17 +228,16 @@ async def summary_api(
     
     # Thực hiện tóm tắt một cụm văn bản
     print("Sumarizing..............................")
-    documents = df.to_dict("records")
     summary_document, _, _ = (
         inference.summary_cluster_document(
-            documents, topic_model, word_similarity, options, list_stop_word
+            document_list, topic_model, word_similarity, options, list_stop_word
         )
     )
     sorted_summary_document = sorted(summary_document, key=lambda x: x.position)
     # Kết quả tóm tắt của toàn bộ văn bản
     summary_document_str = inference.concat_list_summary_sentences(
-        sorted_summary_document, with_position=True
-    )
+        sorted_summary_document, with_position=False
+    ).replace("\n","")
 
     # Kết quả trả về
     result["summary_document"] = summary_document_str
