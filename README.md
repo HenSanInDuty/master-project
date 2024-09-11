@@ -8,7 +8,7 @@
 - Thư mục **src** chứa chương trình chính, trong đó:
     + **gui** chứa front-end
     + **api** chứa back-end
-    
+
 **Cách chạy chương trình**
 - Giải nén thư mục **models** và copy vào thư mục cùng cấp với thư mục **src**
 
@@ -19,7 +19,6 @@ Chạy lệnh
 Sau đó chạy lệnh
 - streamlit run src/gui/gui.py
 - fastapi dev src/api/api.py
-
 2. Nếu chạy bằng Docker
 Thực hiện lệnh
 docker-compose up --build
