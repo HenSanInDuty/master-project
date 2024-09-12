@@ -11,7 +11,7 @@
 
 **Cách chạy chương trình**
 - Giải nén thư mục **source**
-- Giải nén thư mục **models** và copy vào thư mục cùng cấp với thư mục **src**
+- Giải nén thư mục **models** và copy vào thư mục **source**
 
 1. Nếu chạy ở Window
 Chạy lệnh 
@@ -23,7 +23,7 @@ Sau đó chạy lệnh
 
 2. Nếu chạy bằng Docker
 Thực hiện lệnh
-docker-compose up --build
+docker-compose up -d --build
 
 Cả 2 cách đều sẽ chạy trên localhost với port
 - Frontend: 8501

@@ -1,4 +1,9 @@
-API_host = 'http://localhost:8000/'
+import sys
+
+if sys.platform.startswith('linux'):
+    API_host = 'http://api:8000/'
+else:
+    API_host = 'http://localhost:8000/'
 
 # NLP POS
 get_pos_tools = {

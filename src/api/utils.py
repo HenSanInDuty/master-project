@@ -2,6 +2,7 @@ import os
 import pandas as pd
 import subprocess
 import tempfile
+import sys
 
 from functools import lru_cache
 from . import config
@@ -116,7 +117,7 @@ def pos_tag_document_with_topic(preprocess_documents:dict, pos_tool: str) -> dic
         raise Exception("Không tìm thấy tool này")
     
     for topic in preprocess_documents.keys():
-        tagging_documents[f'{topic}'] = pos_tag_document(f'{preprocess_documents[f'{topic}']}', pos_tool)
+        tagging_documents[f'{topic}'] = pos_tag_document(f'''{preprocess_documents[f'{topic}']}''', pos_tool)
     
     return tagging_documents
 
@@ -144,14 +145,15 @@ def pos_tag_document(preprocess_documents:str, pos_tool: str) -> str:
     match options_tool['tool_type']:
         case 'jar':
             jar_file = get_working_dir() + setting.tool_path + f'{pos_tool}.jar'
+            jar_file = check_path(jar_file)
             # Write content to file for Tagging
-            with tempfile.TemporaryFile(delete_on_close=False) as fp:
+            with tempfile.NamedTemporaryFile(delete=False) as fp:
                 content = preprocess_documents.encode(encoding="utf-8")
                 fp.write(content)
                 fp.close()
                 # Tagging 
                 subprocess.call(['java', '-jar', jar_file, '-senseg', '-wordseg' ,'-postag' ,'-input', fp.name])
-                with open(f'{fp.name}{options_tool['file_extension']}', mode='r', encoding="utf-8") as f:
+                with open(f'''{fp.name}{options_tool['file_extension']}''', mode='r', encoding="utf-8") as f:
                     tagging_document = f.read()
         case _:
             raise Exception("Chưa hỗ trợ định dạng này")
@@ -160,6 +162,7 @@ def pos_tag_document(preprocess_documents:str, pos_tool: str) -> str:
 def get_model(model_name:str) -> str:
     setting = get_settings()
     models_dir = get_working_dir() + setting.trained_model_path
+    models_dir = check_path(models_dir)
     match model_name:
         case "Mô hình tóm tắt 1.0":
             models_file = models_dir + 'topic_model_1.json'
@@ -167,3 +170,8 @@ def get_model(model_name:str) -> str:
         case _:
             raise Exception(f"Chưa hỗ trợ mô hình {model_name}")
     
+def check_path(path:str) -> str:
+    if sys.platform.startswith('linux'):
+        return path.replace("\\","/")
+    else:
+        return path
