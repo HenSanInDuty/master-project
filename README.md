@@ -30,5 +30,5 @@ Cả 2 cách đều sẽ chạy trên localhost với port
 - Backend: 8000
 
 **Requiment**
-1. Java version 8
-2. Python 3.12
+1. Java version 8 +
+2. Python 3.11 +
